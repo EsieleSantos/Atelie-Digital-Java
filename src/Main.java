@@ -17,7 +17,7 @@ public class Main {
         System.out.print("Quantos metros de linha você tem na mão? ");
         int estoque = leitor.nextInt();
 
-        // Aqui entra a análise técnica
+        // Parte Específica
         switch (escolha) {
             case 1:
                 verificarEstoque(estoque, 50, "Amigurumi Pequeno");
