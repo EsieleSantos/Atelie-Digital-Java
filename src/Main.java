@@ -17,7 +17,7 @@ public class Main {
         System.out.print("Quantos metros de linha você tem na mão? ");
         int estoque = leitor.nextInt();
 
-        // Aqui entra a análise técnica (Igual a um processo administrativo!)
+        // Aqui entra a análise técnica
         switch (escolha) {
             case 1:
                 verificarEstoque(estoque, 50, "Amigurumi Pequeno");
@@ -35,7 +35,7 @@ public class Main {
         leitor.close();
     }
 
-    // Criamos uma "ferramenta" (método) para não repetir código
+    //  "ferramenta" (método) para não repetir código
     public static void verificarEstoque(int atual, int necessario, String projeto) {
         if (atual >= necessario) {
             System.out.println("Sucesso! Você pode começar seu " + projeto + ".");
