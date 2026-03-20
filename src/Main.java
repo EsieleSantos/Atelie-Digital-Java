@@ -4,17 +4,31 @@ public class Main {
     public static void main(String[] args) {
         Scanner leitor = new Scanner(System.in);
 
-        System.out.println("--- CALCULADORA DE ATELIÊ ---");
-        System.out.print("Nome do boneco: ");
-        String nome = leitor.nextLine();
+        System.out.println("--- 💰 CALCULADORA DE ATELIÊ 💰 ---");
 
-        System.out.print("Custo do material (ex: 20,50): ");
-        double custoMaterial = leitor.nextDouble();
-        double precoVenda = custoMaterial * 3;
+        // 1. Entrada de dados
+        System.out.print("Digite o preço de VENDA do amigurumi: ");
+        double precoVenda = leitor.nextDouble();
 
-        System.out.println("\n--- RELATÓRIO FINAL ---");
-        System.out.println("Para o " + nome + ", sugerimos o preço de: R$ " + precoVenda);
+        System.out.print("Digite o custo do MATERIAL: ");
+        double precoMaterial = leitor.nextDouble();
 
+        // 2. O Cálculo (A "mágica" acontece aqui)
+        double lucro = precoVenda - precoMaterial;
+
+        // 3. Exibição do Resultado
+        System.out.println("---------------------------------");
+        System.out.printf("Seu lucro neste projeto é: R$ %.2f %n", lucro);
+
+        // 4. Tomada de Decisão (Lógica)
+        if (lucro >= 100) {
+            System.out.println("✅ Meta atingida! Esse projeto paga bem.");
+        } else if (lucro > 0) {
+            System.out.println("⚠️ O lucro é baixo, mas ainda é positivo.");
+        } else {
+            System.out.println("❌ Alerta! Você está tendo PREJUÍZO.");
         }
-    }
 
+        System.out.println("---------------------------------");
+    }
+}
