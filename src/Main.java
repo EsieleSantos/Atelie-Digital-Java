@@ -27,12 +27,39 @@ public class Main {
                 double precoMaterial = leitor.nextDouble();
 
                 double lucro = precoVenda - precoMaterial;
+                System.out.println("Escolha o TIPO de projeto:");
+                System.out.println("1 - Amigurumi Grande");
+                System.out.println("2 - Chaveiro/Lembrancinha");
+                System.out.println("3 - Acessório");
+                System.out.print("Opção: ");
+                int tipo = leitor.nextInt();
+
+                double margemEsperada = 0;
+
+                switch (tipo) {
+                    case 1:
+                        margemEsperada = 150.0; // Amigurumis grandes precisam lucrar mais
+                        System.out.println("Categoria Selecionada: Amigurumi Grande");
+                        break;
+                    case 2:
+                        margemEsperada = 20.0;  // Chaveiros têm lucro menor, mas saem mais
+                        System.out.println("Categoria Selecionada: Chaveiro");
+                        break;
+                    case 3:
+                        margemEsperada = 50.0;
+                        System.out.println("Categoria Selecionada: Acessório");
+                        break;
+                    default:
+                        System.out.println("Tipo desconhecido. Usando margem padrão de R$ 50,00");
+                        margemEsperada = 50.0;
+                        break;
+                }
 
                 System.out.println("---------------------------------");
                 System.out.printf("💰 Lucro calculado: R$ %.2f %n", lucro);
 
-                if (lucro >= 100) {
-                    System.out.println("✅ Excelente margem!");
+                if (lucro >= margemEsperada) {
+                    System.out.println("✅ Meta atingida para esta categoria!");
                 } else if (lucro > 0) {
                     System.out.println("⚠️ Margem apertada.");
                 } else {
