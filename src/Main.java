@@ -8,6 +8,10 @@ public class Main {
 
         System.out.println("--- 🧶 GESTÃO DE ATELIÊ DIGITAL v1.1 🧶 ---");
 
+        System.out.print("Nome do projeto: ");
+        leitor.nextLine();
+        String nomeProjeto = leitor.nextLine();
+
         while (continuar) {
             try {
                 System.out.print("\nPreço de VENDA (ou 0 para sair): ");
