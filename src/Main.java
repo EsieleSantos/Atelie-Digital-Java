@@ -60,12 +60,9 @@ public class Main {
 
                 if (lucro >= margemEsperada) {
                     System.out.println("✅ Meta atingida para esta categoria!");
-                } else if (lucro > 0) {
-                    System.out.println("⚠️ Margem apertada.");
                 } else {
-                    System.out.println("❌ Alerta de Prejuízo!");
+                    System.out.println("⚠️ O lucro está abaixo do esperado para um " + tipo + ".");
                 }
-                System.out.println("---------------------------------");
 
             } catch (InputMismatchException e) {
                 System.out.println("🚫 Erro: Digite apenas NÚMEROS com vírgula (ex: 15,50).");
