@@ -1,6 +1,10 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.InputMismatchException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Main {
     public static void main(String[] args) {
@@ -8,10 +12,9 @@ public class Main {
         boolean continuar = true;
         ArrayList<Double> listaDeLucros = new ArrayList<>();
         int totalPecas = 0;
-        double somaAtual = 0; // O acumulador para o nosso "fiscal"
-        double metaDiaria = 500.0;
+        double somaAtual = 0;
 
-        System.out.println("--- 🧶 GESTÃO DE ATELIÊ DIGITAL v1.3 🧶 ---");
+        System.out.println("--- 🧶 GESTÃO DE ATELIÊ DIGITAL v1.5 🧶 ---");
 
         while (continuar) {
             try {
@@ -23,7 +26,7 @@ public class Main {
                     break;
                 }
 
-                leitor.nextLine(); // Limpa o trilho
+                leitor.nextLine();
                 System.out.print("Nome do Projeto: ");
                 String nomeProjeto = leitor.nextLine();
 
@@ -34,40 +37,51 @@ public class Main {
 
                 System.out.println("Tipo: 1-Amigurumi G | 2-Chaveiro | 3-Acessório");
                 int tipo = leitor.nextInt();
-                double margemReq = (tipo == 1) ? 150.0 : (tipo == 2) ? 20.0 : 50.0;
 
-                // --- 📈 ATUALIZANDO O SISTEMA ---
                 listaDeLucros.add(lucro);
                 totalPecas++;
-                somaAtual += lucro; // O fiscal soma aqui!
+                somaAtual += lucro;
 
-                // --- 🖥️ EXIBIÇÃO REFINADA ---
-                System.out.println("\n---------------------------------");
-                System.out.printf("📌 PROJETO: %-15s | Nº: %d %n", nomeProjeto, totalPecas);
-                System.out.printf("💰 LUCRO: R$ %-10.2f | %s %n", lucro, (lucro >= margemReq ? "✅ OK" : "⚠️ BAIXO"));
-
-                // --- 🚨 O FISCAL EM AÇÃO ---
-                if (somaAtual >= metaDiaria) {
-                    System.out.println("*********************************");
-                    System.out.println("🎉 META DIÁRIA BATIDA! R$ " + String.format("%.2f", somaAtual));
-                    System.out.println("*********************************");
-                } else {
-                    System.out.printf("⏳ Faltam R$ %.2f para a meta.%n", (metaDiaria - somaAtual));
-                }
+                System.out.println("---------------------------------");
+                System.out.printf("📌 PROJETO: %s | LUCRO: R$ %.2f %n", nomeProjeto, lucro);
+                if (somaAtual >= 500.0) System.out.println("🎉 META DIÁRIA BATIDA!");
                 System.out.println("---------------------------------");
 
             } catch (InputMismatchException e) {
-                System.out.println("🚫 Erro de entrada. Use números com vírgula.");
+                System.out.println("🚫 Erro de entrada.");
                 leitor.nextLine();
             }
         }
 
-        // --- 📊 RELATÓRIO FINAL ---
-        System.out.println("\n=================================");
-        System.out.println("       RESUMO DO EXPEDIENTE      ");
-        System.out.println("=================================");
-        System.out.println("Total de Projetos: " + totalPecas);
-        System.out.printf("Lucro Acumulado:   R$ %.2f %n", somaAtual);
-        System.out.println("=================================");
+        // --- 📊 GRAVANDO O ARQUIVO COM CARIMBO DE TEMPO ---
+        try {
+            // Usamos "true" para o modo APPEND (anexar no final)
+            FileWriter escritor = new FileWriter("relatorio_atelie.txt", true);
+
+            // 1. Preparamos a Data e Hora
+            LocalDateTime agora = LocalDateTime.now();
+            DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy 'às' HH:mm");
+            String dataFormatada = agora.format(formatador);
+
+            // 2. Escrevemos os dados no arquivo
+            escritor.write("\n\n=================================");
+            escritor.write("\n📅 REGISTRO EM: " + dataFormatada);
+            escritor.write("\n📊 PROJETOS NA SESSÃO: " + totalPecas);
+            escritor.write("\n💰 LUCRO DA SESSÃO: R$ " + String.format("%.2f", somaAtual));
+
+            if (somaAtual >= 500.0) {
+                escritor.write("\nStatus: META DIÁRIA ATINGIDA! ✅");
+            } else {
+                escritor.write("\nStatus: Meta não atingida. ⏳");
+            }
+
+            escritor.write("\n=================================");
+
+            escritor.close();
+            System.out.println("\n✅ Sucesso! O relatório foi atualizado em 'relatorio_atelie.txt'.");
+
+        } catch (IOException e) {
+            System.out.println("🚫 Erro ao gravar o arquivo: " + e.getMessage());
+        }
     }
 }
